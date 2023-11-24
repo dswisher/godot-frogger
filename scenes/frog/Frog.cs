@@ -1,8 +1,22 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Frog : Area2D
 {
+    private const int TileSize = 16;
+
+    private readonly List<MoveEntry> moves = new List<MoveEntry>();
+    private bool moving;
+
+    public Frog()
+    {
+        moves.Add(new MoveEntry("move_up", Vector2.Up));
+        moves.Add(new MoveEntry("move_down", Vector2.Down));
+        moves.Add(new MoveEntry("move_left", Vector2.Left));
+        moves.Add(new MoveEntry("move_right", Vector2.Right));
+    }
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
@@ -11,42 +25,40 @@ public partial class Frog : Area2D
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
-        var velocity = Vector2.Zero;
+    }
+
+
+    public override void _UnhandledInput(InputEvent inputEvent)
+    {
+        if (moving)
+        {
+            return;
+        }
+
+        var moveDelta = Vector2.Zero;
         var animatedSprite2D = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+        var moved = false;
+        foreach (var item in moves)
+        {
+            if (inputEvent.IsActionPressed(item.Name))
+            {
+                moveDelta = item.Direction * TileSize;
 
-        if (Input.IsActionPressed("move_up"))
-        {
-            velocity.Y -= 1;
-            animatedSprite2D.Animation = "up";
-        }
-        else if (Input.IsActionPressed("move_down"))
-        {
-            velocity.Y += 1;
-            animatedSprite2D.Animation = "down";
-        }
-        else if (Input.IsActionPressed("move_left"))
-        {
-            velocity.X -= 1;
-            animatedSprite2D.Animation = "left";
-        }
-        else if (Input.IsActionPressed("move_right"))
-        {
-            velocity.X += 1;
-            animatedSprite2D.Animation = "right";
+                animatedSprite2D.Animation = item.Name;
+
+                moved = true;
+            }
         }
 
-        // TODO - how to move grid-by-grid?
-        if (velocity.Length() > 0)
+        if (moved)
         {
-            velocity = velocity.Normalized() * 16;
             animatedSprite2D.Play();
+            moving = true;
+            var tween = GetTree().CreateTween();
+            tween.TweenProperty(this, "position", Position + moveDelta, 0.2f).SetTrans(Tween.TransitionType.Sine);
+            tween.Finished += () => TweenDone(animatedSprite2D);
+            tween.Play();
         }
-        else
-        {
-            animatedSprite2D.Stop();
-        }
-
-        Position += velocity * (float)delta;
     }
 
 
@@ -54,5 +66,25 @@ public partial class Frog : Area2D
     {
         Position = position;
         Show();
+    }
+
+
+    private void TweenDone(AnimatedSprite2D sprite)
+    {
+        moving = false;
+        sprite.Stop();
+    }
+
+
+    private class MoveEntry
+    {
+        public MoveEntry(string name, Vector2 direction)
+        {
+            Name = name;
+            Direction = direction;
+        }
+
+        public String Name { get; }
+        public Vector2 Direction { get; }
     }
 }
