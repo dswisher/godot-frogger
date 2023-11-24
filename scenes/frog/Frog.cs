@@ -54,6 +54,7 @@ namespace Frogger.scenes.frog
 
             if (moved)
             {
+                GetNode<AudioStreamPlayer2D>("HopSound").Play();
                 animatedSprite2D.Play();
                 moving = true;
                 var tween = GetTree().CreateTween();

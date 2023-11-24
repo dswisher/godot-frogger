@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://dwx3s0v41fihs"]
+[gd_scene load_steps=14 format=3 uid="uid://dwx3s0v41fihs"]
 
 [ext_resource type="Script" path="res://scenes/frog/Frog.cs" id="1_mwyop"]
 [ext_resource type="Texture2D" uid="uid://d126a3hbepwmi" path="res://assets/sprites/frog.png" id="1_w14w1"]
+[ext_resource type="AudioStream" uid="uid://d1e0i4s3oa33b" path="res://assets/sounds/hop.ogg" id="3_hhcok"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qjiw0"]
 atlas = ExtResource("1_w14w1")
@@ -95,3 +96,7 @@ animation = &"move_up"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_tlvr5")
+
+[node name="HopSound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(8, 0)
+stream = ExtResource("3_hhcok")
