@@ -1,0 +1,97 @@
+[gd_scene load_steps=13 format=3 uid="uid://dwx3s0v41fihs"]
+
+[ext_resource type="Script" path="res://scenes/frog/Frog.cs" id="1_mwyop"]
+[ext_resource type="Texture2D" uid="uid://d126a3hbepwmi" path="res://assets/sprites/frog.png" id="1_w14w1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qjiw0"]
+atlas = ExtResource("1_w14w1")
+region = Rect2(72, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_abr4i"]
+atlas = ExtResource("1_w14w1")
+region = Rect2(90, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4pitd"]
+atlas = ExtResource("1_w14w1")
+region = Rect2(36, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v88re"]
+atlas = ExtResource("1_w14w1")
+region = Rect2(54, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b5l6a"]
+atlas = ExtResource("1_w14w1")
+region = Rect2(108, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4sspe"]
+atlas = ExtResource("1_w14w1")
+region = Rect2(126, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pvhcw"]
+atlas = ExtResource("1_w14w1")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3he0v"]
+atlas = ExtResource("1_w14w1")
+region = Rect2(18, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p21bf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qjiw0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_abr4i")
+}],
+"loop": true,
+"name": &"down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4pitd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v88re")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b5l6a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4sspe")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvhcw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3he0v")
+}],
+"loop": true,
+"name": &"up",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tlvr5"]
+size = Vector2(16, 16)
+
+[node name="Frog" type="Area2D"]
+script = ExtResource("1_mwyop")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_p21bf")
+animation = &"up"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_tlvr5")

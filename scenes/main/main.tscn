@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://cn61eqdu20pjf"]
+
+[ext_resource type="Script" path="res://scenes/main/Main.cs" id="1_85suw"]
+[ext_resource type="PackedScene" uid="uid://dwx3s0v41fihs" path="res://scenes/frog/frog.tscn" id="2_ddj64"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_85suw")
+
+[node name="Frog" parent="." instance=ExtResource("2_ddj64")]
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(111, 202)
